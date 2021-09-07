@@ -13,4 +13,4 @@ from userge.config import Config, get_version  # noqa
 from userge.core import (  # noqa
     Userge, filters, Message, get_collection, pool)
 
-userge = Userge()  # userge is the client name
+userge = Userge(ipv6=True)  # userge is the client name
