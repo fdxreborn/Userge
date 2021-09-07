@@ -16,7 +16,7 @@
     <a href="https://github.com/UsergeTeam/Userge#copyright--license-">Copyright & License</a>
 </p>
 
-# Userge 🔥
+# Userge 🔥 + Ipv6 Support
 
 [![Build Status](https://travis-ci.com/UsergeTeam/Userge.svg?branch=alpha)](https://travis-ci.com/UsergeTeam/Userge)
 ![Python Version](https://img.shields.io/badge/python-3.8/3.9-lightgrey)
