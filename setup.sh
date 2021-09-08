@@ -65,14 +65,16 @@ apt install python-pip -y
 # // Installing Google Chrome
 wget -O /root/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 dpkg -i /root/chrome.deb
+rm -f /root/chrome.deb
 
-# // Clone Repository
-cd /root/
-rm -r -f Userge
-git clone https://github.com/wildyproject/Userge
+# // Installing Jserge Requirement
 cd /root/Userge/
 pip install -r requirements.txt
 
+# // Checking If Config.env
+if [[ -f /root/Userge/config.env ]]; then
+    Skip=true
+else
 # // Generate Config.env
 cat > /root/Userge/config.env << END
 #!/bin/bash
@@ -217,6 +219,7 @@ OWNER_ID="${Owner}"
 # use userge as both user and bot
 # fill all USER MODE and BOT MODE vars
 END
+fi
 
 # // Adding Service For AutoStart Bot
 cat > /etc/systemd/system/userge.service << END
@@ -239,3 +242,33 @@ END
 # // Starting Userge Service
 systemctl enable userge
 systemctl start userge
+
+# // Menu Start / Stop
+cat > /usr/bin/userge << END
+#!/bin/bash
+
+input=$1
+
+if [[ $input == "start" ]]; then
+    systemctl stop userge
+    systemctl start userge
+    echo "Userge Started"
+elif [[ $input == "stop" ]]; then
+    systemctl disable userge
+    systemctl stop userge
+    echo "Userge Stopped"
+elif [[ $input == "restart" ]]; then
+    systemctl restart userge
+    echo "Userge Restarted"
+else
+    clear
+    echo "Avaiable Command !"
+    echo "===================================
+    echo "userge start   : Startinig Userge"
+    echo "userge stop    : Stoping Userge"
+    echo "userge restart : Restarting Userge"
+    echo "===================================
+fi
+END
+chmod +x /usr/bin/userge
+userge
