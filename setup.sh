@@ -240,8 +240,7 @@ WantedBy=multi-user.target
 END
 
 # // Menu Start / Stop
-cat > /usr/bin/userge << END
-#!/bin/bash
+echo '#!/bin/bash
 
 input=$1
 
@@ -260,12 +259,11 @@ elif [[ $input == "restart" ]]; then
 else
     clear
     echo "Avaiable Command !"
-    echo "===================================
+    echo "==================================="
     echo "userge start   : Startinig Userge"
     echo "userge stop    : Stoping Userge"
     echo "userge restart : Restarting Userge"
-    echo "===================================
-fi
-END
+    echo "==================================="
+fi' > /usr/bin/userge 
 chmod +x /usr/bin/userge
 userge
