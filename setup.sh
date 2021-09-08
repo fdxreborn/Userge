@@ -239,10 +239,6 @@ RestartSec=2
 WantedBy=multi-user.target
 END
 
-# // Starting Userge Service
-systemctl enable userge
-systemctl start userge
-
 # // Menu Start / Stop
 cat > /usr/bin/userge << END
 #!/bin/bash
@@ -250,6 +246,7 @@ cat > /usr/bin/userge << END
 input=$1
 
 if [[ $input == "start" ]]; then
+    systemctl enable userge
     systemctl stop userge
     systemctl start userge
     echo "Userge Started"
