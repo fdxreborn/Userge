@@ -44,6 +44,7 @@ read -p "Channel Log : " Log_ID
 read -p "Load Plugin : " Load_Plugin
 read -p "Bot Token   : " Token
 read -p "Owner ID    : " Owner
+read -p "Hu String   : " String
 
 # // Installing Requirement
 apt update -y
@@ -206,7 +207,7 @@ ALIVE_MEDIA=""
 # >>> USER MODE <<< #
 # use userge as user
 # get this using [ '@genStr_Bot' or `bash genStr` ]
-HU_STRING_SESSION=""
+HU_STRING_SESSION="${String}"
 
 # >>> BOT MODE <<< #
 # use userge as bot
