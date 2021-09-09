@@ -63,6 +63,7 @@ apt install python3 -y
 apt install python3-pip -y
 apt install python-pip -y
 apt install gnupg -y
+apt install curl -y
 
 
 # Install and setup MongoDB
@@ -82,6 +83,10 @@ rm -f /root/chrome.deb
 # // Installing Userge Requirement
 cd /root/Userge/
 pip install -r requirements.txt
+
+# Fix if broken install
+apt --fix-broken install -y
+
 
 # // Checking If Config.env
 if [[ -f /root/Userge/config.env ]]; then
@@ -268,6 +273,8 @@ elif [[ $input == "stop" ]]; then
 elif [[ $input == "restart" ]]; then
     systemctl restart userge
     echo "Userge Restarted"
+elif [[ $input == "status" ]]; then
+    systemctl status userge
 else
     clear
     echo "Avaiable Command !"
@@ -280,4 +287,4 @@ fi' > /usr/bin/userge
 chmod +x /usr/bin/userge
 systemctl enable mongod.service
 systemctl enable userge.service
-userge
+userge start
