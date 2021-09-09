@@ -39,12 +39,12 @@ read -p " Press Enter For Start Installation" temp
 clear
 read -p "API ID      : " API_ID
 read -p "API Hash    : " API_HASH
-read -p "MonggoDB    : " MonggoDB
+#read -p "MongoDB    : " MongoDB
 read -p "Channel Log : " Log_ID
-read -p "Load Plugin : " Load_Plugin
-read -p "Bot Token   : " Token
-read -p "Owner ID    : " Owner
-read -p "Hu String   : " String
+#read -p "Load Plugin : " Load_Plugin
+#read -p "Bot Token   : " Token
+#read -p "Owner ID    : " Owner
+read -p "Hu(Session) String   : " String
 
 # // Installing Requirement
 apt update -y
@@ -62,13 +62,24 @@ apt install python -y
 apt install python3 -y
 apt install python3-pip -y
 apt install python-pip -y
+apt install gnupg -y
+
+
+# Install and setup MongoDB
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+apt-get update -y
+apt-get install -y mongodb-org
+systemctl daemon-reload
+systemctl start mongod
+
 
 # // Installing Google Chrome
 wget -O /root/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 dpkg -i /root/chrome.deb
 rm -f /root/chrome.deb
 
-# // Installing Jserge Requirement
+# // Installing Userge Requirement
 cd /root/Userge/
 pip install -r requirements.txt
 
@@ -101,7 +112,7 @@ API_HASH="${API_HASH}"
 
 # Mongodb url from https://cloud.mongodb.com/
 # comment below line if you are going to use docker !
-DATABASE_URL="${MonggoDB}"
+DATABASE_URL="mongodb://localhost:27017"
 
 
 # Telegram Log Channel ID
@@ -117,7 +128,7 @@ LOG_CHANNEL_ID="${Log_ID}"
 
 
 # Set true if your like to use unofficial plugins
-LOAD_UNOFFICIAL_PLUGINS=${Load_Plugin}
+LOAD_UNOFFICIAL_PLUGINS=false
 
 
 # assert running single Userge instance to prevent from AUTH_KEY_DUPLICATED error.
@@ -267,4 +278,6 @@ else
     echo "==================================="
 fi' > /usr/bin/userge 
 chmod +x /usr/bin/userge
+systemctl enable mongod.service
+systemctl enable userge.service
 userge
